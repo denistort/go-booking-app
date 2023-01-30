@@ -1,10 +1,10 @@
 package app
 
 import (
-	"booking-app/cmd/web/routes"
-	"booking-app/pkg/config"
-	"booking-app/pkg/handlers"
 	"fmt"
+	"github.com/denistort/go-booking-app/cmd/web/routes"
+	"github.com/denistort/go-booking-app/pkg/config"
+	"github.com/denistort/go-booking-app/pkg/handlers"
 	"log"
 	"net/http"
 )

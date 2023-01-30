@@ -1,4 +1,4 @@
-module booking-app
+module github.com/denistort/go-booking-app
 
 go 1.19
 

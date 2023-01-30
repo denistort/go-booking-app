@@ -1,9 +1,9 @@
 package handlers
 
 import (
-	"booking-app/pkg/config"
-	"booking-app/pkg/render"
 	"fmt"
+	"github.com/denistort/go-booking-app/pkg/config"
+	"github.com/denistort/go-booking-app/pkg/render"
 	"net/http"
 )
 

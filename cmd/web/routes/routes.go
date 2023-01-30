@@ -1,9 +1,9 @@
 package routes
 
 import (
-	"booking-app/cmd/web/middlewares"
-	"booking-app/pkg/config"
-	"booking-app/pkg/handlers"
+	"github.com/denistort/go-booking-app/cmd/web/middlewares"
+	"github.com/denistort/go-booking-app/pkg/config"
+	"github.com/denistort/go-booking-app/pkg/handlers"
 	"github.com/go-chi/chi/v5"
 	"net/http"
 )

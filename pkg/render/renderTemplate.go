@@ -1,9 +1,9 @@
 package render
 
 import (
-	"booking-app/pkg/config"
 	"bytes"
 	"fmt"
+	"github.com/denistort/go-booking-app/pkg/config"
 	"html/template"
 	"log"
 	"net/http"

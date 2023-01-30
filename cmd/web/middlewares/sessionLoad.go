@@ -1,7 +1,7 @@
 package middlewares
 
 import (
-	"booking-app/pkg/config"
+	"github.com/denistort/go-booking-app/pkg/config"
 	"net/http"
 )
 

@@ -1,8 +1,8 @@
 package session
 
 import (
-	"booking-app/pkg/config"
 	"github.com/alexedwards/scs/v2"
+	"github.com/denistort/go-booking-app/pkg/config"
 	"net/http"
 	"time"
 )
