@@ -1,0 +1,16 @@
+{{template "base" .}}
+{{define "content"}}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>About Page {{ index .Data }}</h1>
+            <p>
+                Simple example of page about company
+            </p>
+            <a href="/">go to home</a>
+            <a href="/api">go to api</a>
+        </div>
+    </div>
+</div>
+{{end}}
