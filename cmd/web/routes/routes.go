@@ -17,5 +17,9 @@ func Routes(config *config.AppConfig) http.Handler {
 	// Paths
 	r.Get("/", handlers.HomeHandler)
 	r.Get("/about", handlers.AboutHandler)
+
+	// Serve Static files
+	fileServer := http.FileServer(http.Dir("./static/"))
+	r.Handle("/static/*", http.StripPrefix("/static", fileServer))
 	return r
 }
