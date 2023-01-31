@@ -4,15 +4,15 @@
         <div class="row py-8">
             <div class="col-md-8">
                 <h1 class="mb-3">Reservation</h1>
-                <form class="checkAvailable-form">
+                <form class="checkAvailable-form needs-validation" novalidate method="post">
                     <div class="row g-3 mb-3">
                         <div class="col">
                             <label for="date-from" class="form-label">Enter your start date</label>
-                            <input required type="date" class="form-control" id="date-from" aria-describedby="emailHelp" name="date-from">
+                            <input required type="date" class="form-control" id="date-from" aria-describedby="date" name="date-from">
                         </div>
                         <div class="col">
-                            <label for="date-to" class="form-label">Enter</label>
-                            <input required type="date" class="form-control" id="date-from" aria-describedby="emailHelp" name="date-to">
+                            <label for="date-to" class="form-label">Enter How much reserve you want</label>
+                            <input required type="date" class="form-control" id="date-to" aria-describedby="date" name="date-to">
                         </div>
                     </div>
                     <div class="mb-3">
