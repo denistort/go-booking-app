@@ -21,6 +21,7 @@ func Routes(_ *config.AppConfig) http.Handler {
 	r.Get("/contact-us", handlers.ContactHandler)
 	r.Get("/check-available", handlers.CheckAvailableHandler)
 	r.Get("/reservation", handlers.ReservationHandler)
+	r.Post("/reservation", handlers.PostReservationHandler)
 	// Serve Static files
 	fileServer := http.FileServer(http.Dir("./static/"))
 	r.Handle("/static/*", http.StripPrefix("/static", fileServer))

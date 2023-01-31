@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/denistort/go-booking-app/pkg/config"
+	"github.com/justinas/nosurf"
 	"html/template"
 	"log"
 	"net/http"
@@ -12,9 +13,10 @@ import (
 
 var functions = template.FuncMap{}
 
-func Template[K comparable](w http.ResponseWriter, templateName string, td *TemplateData[K]) {
+func Template[K comparable](w http.ResponseWriter, r *http.Request, templateName string, td *TemplateData[K]) {
 	appConfig := config.GetAppConfig()
 	var tc map[string]*template.Template
+
 	if appConfig.UseCache {
 		tc = config.GetAppConfig().TemplateCache
 	} else {
@@ -25,6 +27,7 @@ func Template[K comparable](w http.ResponseWriter, templateName string, td *Temp
 	if !ok {
 		log.Fatal("Couldn't get Template cache")
 	}
+	td.CSRFToken = nosurf.Token(r)
 	buf := new(bytes.Buffer)
 	_ = t.Execute(buf, td)
 	_, err := buf.WriteTo(w)

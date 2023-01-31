@@ -4,7 +4,8 @@
         <div class="row py-8">
             <div class="col-md-8">
                 <h1 class="mb-3">Reservation</h1>
-                <form class="checkAvailable-form needs-validation" novalidate method="post">
+                <form id="reservation-form" action="/reservation" class="checkAvailable-form needs-validation" novalidate method="post">
+                    <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
                     <div class="row g-3 mb-3">
                         <div class="col">
                             <label for="date-from" class="form-label">Enter your start date</label>
@@ -48,5 +49,5 @@
             </div>
         </div>
     </div>
-        <script src="/static/js/checkAvailableForm.js"></script>
+        <script src="/static/js/reservationForm.js"></script>
 {{end}}
