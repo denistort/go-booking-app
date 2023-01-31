@@ -3,8 +3,8 @@ package config
 import (
 	"github.com/denistort/go-booking-app/cmd/web/server"
 	"github.com/denistort/go-booking-app/cmd/web/session"
-	"github.com/denistort/go-booking-app/pkg/config"
-	"github.com/denistort/go-booking-app/pkg/render"
+	"github.com/denistort/go-booking-app/internal/config"
+	"github.com/denistort/go-booking-app/internal/render"
 )
 
 var tc, _ = render.CreateTemplateCache()

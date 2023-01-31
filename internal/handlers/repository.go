@@ -3,8 +3,8 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/denistort/go-booking-app/pkg/config"
-	"github.com/denistort/go-booking-app/pkg/render"
+	"github.com/denistort/go-booking-app/internal/config"
+	"github.com/denistort/go-booking-app/internal/render"
 	"net/http"
 )
 

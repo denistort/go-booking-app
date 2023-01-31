@@ -3,8 +3,8 @@ package app
 import (
 	"fmt"
 	"github.com/denistort/go-booking-app/cmd/web/routes"
-	"github.com/denistort/go-booking-app/pkg/config"
-	"github.com/denistort/go-booking-app/pkg/handlers"
+	"github.com/denistort/go-booking-app/internal/config"
+	"github.com/denistort/go-booking-app/internal/handlers"
 	"log"
 	"net/http"
 )

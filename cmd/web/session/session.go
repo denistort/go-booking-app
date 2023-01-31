@@ -2,7 +2,7 @@ package session
 
 import (
 	"github.com/alexedwards/scs/v2"
-	"github.com/denistort/go-booking-app/pkg/config"
+	"github.com/denistort/go-booking-app/internal/config"
 	"net/http"
 	"time"
 )
