@@ -39,3 +39,40 @@ func AboutHandler(w http.ResponseWriter, req *http.Request) {
 		Data: "Some string in the about handler",
 	})
 }
+func RoomHandler(w http.ResponseWriter, req *http.Request) {
+	query := req.URL.Query()
+	t, ok := query["t"]
+	if ok != true {
+		return
+	}
+	var templateName string
+	switch t[0] {
+	case "generals-quarters":
+		templateName = "general.page.tmpl"
+	case "majors-suite":
+		templateName = "major.page.tmpl"
+	default:
+		templateName = "home.page.tmpl"
+	}
+	render.Template(w, templateName, &render.TemplateData[string]{
+		Data: "Some string in the about handler",
+	})
+}
+
+func ContactHandler(w http.ResponseWriter, _ *http.Request) {
+	render.Template(w, "contact.page.tmpl", &render.TemplateData[string]{
+		Data: "Some string in the about handler",
+	})
+}
+
+func CheckAvailableHandler(w http.ResponseWriter, _ *http.Request) {
+	render.Template(w, "check-available.page.tmpl", &render.TemplateData[string]{
+		Data: "Some string in the about handler",
+	})
+}
+
+func ReservationHandler(w http.ResponseWriter, _ *http.Request) {
+	render.Template(w, "reservation.page.tmpl", &render.TemplateData[string]{
+		Data: "Some string in the about handler",
+	})
+}

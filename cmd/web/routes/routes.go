@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-func Routes(config *config.AppConfig) http.Handler {
+func Routes(_ *config.AppConfig) http.Handler {
 	r := chi.NewRouter()
 	// Middlewares
 	r.Use(middlewares.Log)
@@ -17,7 +17,10 @@ func Routes(config *config.AppConfig) http.Handler {
 	// Paths
 	r.Get("/", handlers.HomeHandler)
 	r.Get("/about", handlers.AboutHandler)
-
+	r.Get("/rooms", handlers.RoomHandler)
+	r.Get("/contact-us", handlers.ContactHandler)
+	r.Get("/check-available", handlers.CheckAvailableHandler)
+	r.Get("/reservation", handlers.ReservationHandler)
 	// Serve Static files
 	fileServer := http.FileServer(http.Dir("./static/"))
 	r.Handle("/static/*", http.StripPrefix("/static", fileServer))
