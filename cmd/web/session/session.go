@@ -2,7 +2,6 @@ package session
 
 import (
 	"github.com/alexedwards/scs/v2"
-	"github.com/denistort/go-booking-app/internal/config"
 	"net/http"
 	"time"
 )
@@ -12,6 +11,6 @@ func Create() *scs.SessionManager {
 	manager.Lifetime = 24 * time.Hour
 	manager.Cookie.Persist = true
 	manager.Cookie.SameSite = http.SameSiteLaxMode
-	manager.Cookie.Secure = config.GetAppConfig().InProduction
+	manager.Cookie.Secure = false
 	return manager
 }

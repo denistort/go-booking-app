@@ -1,0 +1,53 @@
+package appRouter
+
+import (
+	"github.com/denistort/go-booking-app/cmd/web/config"
+	"github.com/denistort/go-booking-app/cmd/web/middlewares"
+	"github.com/denistort/go-booking-app/internal/handlers/JsonController"
+	"github.com/denistort/go-booking-app/internal/handlers/RenderController"
+	"github.com/denistort/go-booking-app/internal/templateCreator"
+	"github.com/go-chi/chi/v5"
+	"net/http"
+)
+
+type AppRouter struct {
+	router    chi.Router
+	appConfig *config.AppConfig
+}
+
+func New(config *config.AppConfig) *AppRouter {
+	return &AppRouter{
+		router:    chi.NewRouter(),
+		appConfig: config,
+	}
+}
+
+func (r *AppRouter) Start() http.Handler {
+	// Middlewares
+	r.router.Use(middlewares.Log)
+	r.router.Use(middlewares.NoSurf)
+	r.router.Use(middlewares.SessionLoad)
+	// Paths
+	renderController := RenderController.New(r.appConfig, templateCreator.New(r.appConfig))
+	jsonController := JsonController.New(r.appConfig)
+
+	// Handler that templateCreator templates and getting back as response
+	r.router.Get("/", renderController.HomeHandler)
+	r.router.Get("/about", renderController.AboutHandler)
+	r.router.Get("/rooms", renderController.RoomHandler)
+	r.router.Get("/contact-us", renderController.HomeHandler)
+	r.router.Get("/check-available", renderController.CheckAvailableHandler)
+	r.router.Get("/reservation", renderController.ReservationHandler)
+
+	// Json Handlers
+	r.router.Post("/reservation", jsonController.PostReservationHandler)
+	r.router.Post("/contact-us", jsonController.ContactJsonHandler)
+	// Serve Static files
+	fileServer := http.FileServer(http.Dir("./static/"))
+	r.router.Handle("/static/*", http.StripPrefix("/static", fileServer))
+	return r.router
+}
+
+func (r *AppRouter) Get(url string, h http.HandlerFunc) {
+	r.Get(url, h)
+}

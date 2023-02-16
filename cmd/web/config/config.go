@@ -9,7 +9,7 @@ import (
 // AppConfig holds the application configuration
 type AppConfig struct {
 	InProduction  bool
-	Port          string
+	Port          int
 	UseCache      bool
 	TemplateCache map[string]*template.Template
 	InfoLog       *log.Logger
@@ -18,11 +18,7 @@ type AppConfig struct {
 
 var appConfig AppConfig
 
-func Create(config *AppConfig) *AppConfig {
+func New(config *AppConfig) *AppConfig {
 	appConfig = *config
-	return &appConfig
-}
-
-func GetAppConfig() *AppConfig {
 	return &appConfig
 }

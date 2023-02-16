@@ -6,6 +6,6 @@ import (
 )
 
 func main() {
-	application := app.Create().Init(config.Global)
+	application := app.New(config.Global)
 	application.StartServer()
 }

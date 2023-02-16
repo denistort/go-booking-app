@@ -5,15 +5,15 @@
         }
         return true
     }
-    document.querySelector("#reservation-form").addEventListener("submit", async (e) => {
+    document.querySelector(".contact-form").addEventListener("submit", async (e) => {
         e.preventDefault()
-        const formData = new FormData(document.querySelector("#reservation-form"))
+        const formData = new FormData(document.querySelector(".contact-form"))
         if (!validate(formData)) {
             return
         }
         let data;
         try {
-            const w = await fetch("/reservation", {
+            const w = await fetch("/contact-us", {
                 method: "post",
                 body: formData
             });

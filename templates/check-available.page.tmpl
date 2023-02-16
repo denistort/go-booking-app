@@ -5,6 +5,7 @@
             <div class="col-md-8">
                 <h1 class="mb-3">Search for Availability</h1>
                 <form class="checkAvailable-form needs-validation" novalidate>
+                    <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
                     <div class="row g-3 mb-3">
                         <div class="col">
                             <label for="date-from" class="form-label">Enter your start date</label>

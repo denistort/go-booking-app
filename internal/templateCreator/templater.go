@@ -1,9 +1,9 @@
-package render
+package templateCreator
 
 import (
 	"bytes"
 	"fmt"
-	"github.com/denistort/go-booking-app/internal/config"
+	"github.com/denistort/go-booking-app/cmd/web/config"
 	"github.com/justinas/nosurf"
 	"html/template"
 	"log"
@@ -13,31 +13,41 @@ import (
 
 var functions = template.FuncMap{}
 
-func Template[K comparable](w http.ResponseWriter, r *http.Request, templateName string, td *TemplateData[K]) {
-	appConfig := config.GetAppConfig()
+type TemplateCreator struct {
+	Functions template.FuncMap
+	appConfig *config.AppConfig
+}
+
+func New(appConfig *config.AppConfig) *TemplateCreator {
+	return &TemplateCreator{
+		appConfig: appConfig,
+	}
+}
+
+func (t *TemplateCreator) Create(w http.ResponseWriter, r *http.Request, templateName string, td *TemplateData) {
 	var tc map[string]*template.Template
 
-	if appConfig.UseCache {
-		tc = config.GetAppConfig().TemplateCache
+	if t.appConfig.UseCache {
+		tc = t.appConfig.TemplateCache
 	} else {
-		tc, _ = CreateTemplateCache()
+		tc, _ = t.CreateTemplateCache()
 	}
 
-	t, ok := tc[templateName]
+	templateFromCache, ok := tc[templateName]
 	if !ok {
 		log.Fatal("Couldn't get Template cache")
 	}
 	td.CSRFToken = nosurf.Token(r)
 	buf := new(bytes.Buffer)
-	_ = t.Execute(buf, td)
+	_ = templateFromCache.Execute(buf, td)
 	_, err := buf.WriteTo(w)
 	if err != nil {
-		fmt.Println("Error writing template to a browser")
+		fmt.Println("Error writing templateCreator to a browser")
 	}
 }
 
-// CreateTemplateCache creates a template cache as a map
-func CreateTemplateCache() (map[string]*template.Template, error) {
+// CreateTemplateCache creates a templateCreator cache as a map
+func (t *TemplateCreator) CreateTemplateCache() (map[string]*template.Template, error) {
 	myCache := map[string]*template.Template{}
 	pages, err := filepath.Glob("./templates/*.page.tmpl")
 	if err != nil {
