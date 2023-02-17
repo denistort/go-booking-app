@@ -24,7 +24,7 @@
         }
         if (data.ok === true) {
             global.notie.alert({ type: 'success', text: 'Your reservation has send', time: 2 })
-            // setTimeout(() => global.location.replace("/"), 2000)
+            setTimeout(() => global.location.replace("/"), 2000)
         } else {
             console.log(data);
             global.notie.alert({ type: 'error', text: 'Something went wrong', time: 2 })

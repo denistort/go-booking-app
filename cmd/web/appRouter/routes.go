@@ -26,9 +26,10 @@ func New(config *config.AppConfig) *AppRouter {
 
 func (r *AppRouter) Start() http.Handler {
 	// Middlewares
-	r.router.Use(middlewares.Log)
-	r.router.Use(middlewares.NoSurf)
-	r.router.Use(middlewares.SessionLoad)
+	m := middlewares.New(r.appConfig)
+	r.router.Use(m.Log)
+	r.router.Use(m.NoSurf)
+	r.router.Use(m.SessionLoad)
 
 	// Creating Templater
 	t := templateCreator.New(r.appConfig)

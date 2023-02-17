@@ -5,6 +5,6 @@ type ReservationDto struct {
 	LastName  string `validate:"required"`
 	Email     string `validate:"required,email"`
 	Phone     string `validate:"required"`
-	DateFrom  string `validate:"string"`
-	DateTo    string `validate:"string"`
+	DateFrom  string `validate:"required"`
+	DateTo    string `validate:"required"`
 }

@@ -1,13 +1,16 @@
 package config
 
 import (
+	"errors"
 	"github.com/alexedwards/scs/v2"
 	"github.com/go-playground/validator/v10"
 	"html/template"
 	"log"
 )
 
+var AlreadyCreatedError = errors.New("already created config")
 var appConfig AppConfig
+var created = false
 
 // AppConfig holds the application configuration
 type AppConfig struct {
@@ -20,7 +23,11 @@ type AppConfig struct {
 	Validator     *validator.Validate
 }
 
-func New(config *AppConfig) *AppConfig {
+func New(config *AppConfig) (*AppConfig, error) {
+	if created == true {
+		return nil, AlreadyCreatedError
+	}
 	appConfig = *config
-	return &appConfig
+	created = true
+	return &appConfig, nil
 }
