@@ -56,11 +56,11 @@ const DAYLIMITS = 5;
     })
 })()
 
-window.notie.alert({ type: 'success', text: 'Success!', time: 2 })
-
-Swal.fire({
-    title: 'Error!',
-    text: 'Do you want to continue',
-    icon: 'error',
-    confirmButtonText: 'Cool'
-})
+// window.notie.alert({ type: 'success', text: 'Success!', time: 2 })
+//
+// Swal.fire({
+//     title: 'Error!',
+//     text: 'Do you want to continue',
+//     icon: 'error',
+//     confirmButtonText: 'Cool'
+// })

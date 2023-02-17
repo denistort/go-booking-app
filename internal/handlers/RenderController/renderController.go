@@ -3,7 +3,6 @@ package RenderController
 import (
 	"fmt"
 	"github.com/denistort/go-booking-app/cmd/web/config"
-	"github.com/denistort/go-booking-app/internal/forms"
 	"github.com/denistort/go-booking-app/internal/templateCreator"
 	"net/http"
 )
@@ -59,10 +58,4 @@ func (r *RenderController) ContactHandler(w http.ResponseWriter, req *http.Reque
 
 func (r *RenderController) CheckAvailableHandler(w http.ResponseWriter, req *http.Request) {
 	r.Templater.Create(w, req, "check-available.page.tmpl", &templateCreator.TemplateData{})
-}
-
-func (r *RenderController) ReservationHandler(w http.ResponseWriter, req *http.Request) {
-	r.Templater.Create(w, req, "reservation.page.tmpl", &templateCreator.TemplateData{
-		Form: forms.New(nil),
-	})
 }

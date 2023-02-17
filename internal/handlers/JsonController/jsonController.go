@@ -37,22 +37,6 @@ func (j *JsonController) ContactJsonHandler(w http.ResponseWriter, req *http.Req
 	w.Write(out)
 }
 
-func (j *JsonController) PostReservationHandler(w http.ResponseWriter, req *http.Request) {
-	dateFrom := req.Form.Get("date-from")
-	dateTo := req.Form.Get("date-to")
-	fmt.Println(dateFrom, dateTo)
-	resp := PostReservationResponse{
-		Ok:      true,
-		Message: "Я работаю друг все хорошо",
-	}
-	out, err := json.Marshal(resp)
-	if err != nil {
-		fmt.Println(err)
-	}
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(out)
-}
-
 type PostReservationResponse struct {
 	Ok      bool   `json:"ok"`
 	Message string `json:"message"`
