@@ -2,9 +2,12 @@ package config
 
 import (
 	"github.com/alexedwards/scs/v2"
+	"github.com/go-playground/validator/v10"
 	"html/template"
 	"log"
 )
+
+var appConfig AppConfig
 
 // AppConfig holds the application configuration
 type AppConfig struct {
@@ -14,9 +17,8 @@ type AppConfig struct {
 	TemplateCache map[string]*template.Template
 	InfoLog       *log.Logger
 	Session       *scs.SessionManager
+	Validator     *validator.Validate
 }
-
-var appConfig AppConfig
 
 func New(config *AppConfig) *AppConfig {
 	appConfig = *config

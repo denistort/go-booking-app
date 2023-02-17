@@ -1,12 +1,13 @@
 package reservation_controller
 
 import (
-	"encoding/json"
-	"fmt"
 	"github.com/denistort/go-booking-app/cmd/web/config"
 	"github.com/denistort/go-booking-app/internal/forms"
+	reservationdto "github.com/denistort/go-booking-app/internal/reservation/reservation-dto"
 	"github.com/denistort/go-booking-app/internal/reservation/reservation-service"
 	"github.com/denistort/go-booking-app/internal/templateCreator"
+	"github.com/denistort/go-booking-app/internal/utils"
+	"github.com/go-playground/validator/v10"
 	"net/http"
 )
 
@@ -38,36 +39,47 @@ func (r *ReservationController) ReservationHandler(w http.ResponseWriter, req *h
 
 func (r *ReservationController) PostCreateReservation(w http.ResponseWriter, req *http.Request) {
 	_ = req.ParseForm()
-
-	//validationFields := []string{"date-from", "date-to", "phone", "email", "last_name", "first_name"}
-	//mapOfBody, err := utils.ReqBodyToMap(validationFields, req)
-	model := r.Service.CreateReservation(
-		req.Form.Get("first_name"),
-		req.Form.Get("last_name"),
-		req.Form.Get("phone"),
-		req.Form.Get("email"),
-		req.Form.Get("date-from"),
-		req.Form.Get("date-to"),
-	)
-	fmt.Println(model)
-	resp := CreateReservationResponse{
+	reservationDto := reservationdto.ReservationDto{
+		FirstName: req.Form.Get("first_name"),
+		LastName:  req.Form.Get("last_name"),
+		Phone:     req.Form.Get("phone"),
+		Email:     req.Form.Get("email"),
+		DateFrom:  req.Form.Get("date-from"),
+		DateTo:    req.Form.Get("date-to"),
+	}
+	if validationsErrors := r.AppConfig.Validator.Struct(reservationDto); validationsErrors != nil {
+		errorResponse := ValidationErrorResponse{
+			Ok:      false,
+			Message: "This fields is uncorrected",
+		}
+		for _, err := range validationsErrors.(validator.ValidationErrors) {
+			errorResponse.NotValidFields = append(errorResponse.NotValidFields, Field{
+				Name:  err.Field(),
+				Value: err.Param(),
+			})
+		}
+		utils.SendJson(errorResponse, w)
+		return
+	}
+	utils.SendJson(CreateReservationResponse{
 		Ok:      true,
-		Message: "Я работаю друг все хорошо",
-	}
-
-	out, err := json.Marshal(resp)
-
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(out)
+		Message: "Reservation success",
+	}, w)
 }
 
 type CreateReservationResponse struct {
 	Ok      bool   `json:"ok"`
 	Message string `json:"message"`
+}
+
+type ValidationErrorResponse struct {
+	Ok             bool    `json:"ok"`
+	Message        string  `json:"message"`
+	NotValidFields []Field `json:"not_valid_fields"`
+}
+type Field struct {
+	Name  string
+	Value string
 }
 
 func (r *ReservationController) CheckAvailableHandler(w http.ResponseWriter, req *http.Request) {

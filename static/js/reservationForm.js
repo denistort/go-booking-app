@@ -8,6 +8,7 @@
     document.querySelector("#reservation-form").addEventListener("submit", async (e) => {
         e.preventDefault()
         const formData = new FormData(document.querySelector("#reservation-form"))
+        console.log(formData)
         if (!validate(formData)) {
             return
         }
@@ -23,8 +24,9 @@
         }
         if (data.ok === true) {
             global.notie.alert({ type: 'success', text: 'Your reservation has send', time: 2 })
-            setTimeout(() => global.location.replace("/"), 2000)
+            // setTimeout(() => global.location.replace("/"), 2000)
         } else {
+            console.log(data);
             global.notie.alert({ type: 'error', text: 'Something went wrong', time: 2 })
         }
         console.log(data)
