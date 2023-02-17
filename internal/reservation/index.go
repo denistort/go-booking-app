@@ -15,9 +15,9 @@ func MakeReservationRouter(config *config.AppConfig, t *templateCreator.Template
 
 	return func() http.Handler {
 		r := chi.NewRouter()
-		r.Get("/", controller.ReservationHandler)
+		r.Get("/", controller.Get)
+		r.Post("/", controller.Create)
 		r.Get("/check-available", controller.CheckAvailableHandler)
-		r.Post("/", controller.PostCreateReservation)
 		return r
 	}
 }

@@ -7,6 +7,7 @@ import (
 	"github.com/denistort/go-booking-app/internal/handlers/RenderController"
 	"github.com/denistort/go-booking-app/internal/reservation"
 	"github.com/denistort/go-booking-app/internal/templateCreator"
+	"github.com/denistort/go-booking-app/internal/user"
 	"github.com/go-chi/chi/v5"
 	"net/http"
 )
@@ -35,6 +36,7 @@ func (r *AppRouter) Start() http.Handler {
 	renderController := RenderController.New(r.appConfig, t)
 	jsonController := JsonController.New(r.appConfig)
 	reservationRouter := reservation.MakeReservationRouter(r.appConfig, t)
+	userRouter := user.MakeUserRouter(r.appConfig, t)
 
 	// Handler that templateCreator templates and getting back as response
 	r.router.Get("/", renderController.HomeHandler)
@@ -44,7 +46,7 @@ func (r *AppRouter) Start() http.Handler {
 	r.router.Get("/check-available", renderController.CheckAvailableHandler)
 	// Reservation Controller Mount
 	r.router.Mount("/reservation", reservationRouter())
-
+	r.router.Mount("/", userRouter())
 	// Json Handlers
 	r.router.Post("/contact-us", jsonController.ContactJsonHandler)
 	// Serve Static files

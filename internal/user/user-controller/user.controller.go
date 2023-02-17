@@ -1,43 +1,43 @@
-package reservation_controller
+package userController
 
 import (
 	"github.com/denistort/go-booking-app/cmd/web/config"
-	reservationDto "github.com/denistort/go-booking-app/internal/reservation/reservation-dto"
-	reservationService "github.com/denistort/go-booking-app/internal/reservation/reservation-service"
+	reservation_dto "github.com/denistort/go-booking-app/internal/reservation/reservation-dto"
+	reservation_service "github.com/denistort/go-booking-app/internal/reservation/reservation-service"
 	"github.com/denistort/go-booking-app/internal/templateCreator"
 	"github.com/denistort/go-booking-app/internal/utils"
 	"github.com/go-playground/validator/v10"
 	"net/http"
 )
 
-// ReservationController is handlers type
-type ReservationController struct {
+// UserController is handlers type
+type UserController struct {
 	AppConfig *config.AppConfig
 	Templater *templateCreator.TemplateCreator
-	Service   *reservationService.ReservationService
+	Service   *reservation_service.ReservationService
 }
 
 // New creates the ReservationController
 func New(
 	config *config.AppConfig,
 	t *templateCreator.TemplateCreator,
-	service *reservationService.ReservationService,
-) *ReservationController {
-	return &ReservationController{
+	service *reservation_service.ReservationService,
+) *UserController {
+	return &UserController{
 		AppConfig: config,
 		Templater: t,
 		Service:   service,
 	}
 }
 
-func (r *ReservationController) Get(w http.ResponseWriter, req *http.Request) {
+func (r *UserController) SignIn(w http.ResponseWriter, req *http.Request) {
 	r.Templater.Create(w, req, "reservation.page.tmpl", &templateCreator.TemplateData{})
 }
 
-func (r *ReservationController) Create(w http.ResponseWriter, req *http.Request) {
+func (r *UserController) SignUp(w http.ResponseWriter, req *http.Request) {
 	_ = req.ParseForm()
 
-	dto := reservationDto.ReservationDto{
+	reservationDto := reservation_dto.ReservationDto{
 		FirstName: req.Form.Get("first_name"),
 		LastName:  req.Form.Get("last_name"),
 		Phone:     req.Form.Get("phone"),
@@ -45,7 +45,7 @@ func (r *ReservationController) Create(w http.ResponseWriter, req *http.Request)
 		DateFrom:  req.Form.Get("date-from"),
 		DateTo:    req.Form.Get("date-to"),
 	}
-	if validationsErrors := r.AppConfig.Validator.Struct(dto); validationsErrors != nil {
+	if validationsErrors := r.AppConfig.Validator.Struct(reservationDto); validationsErrors != nil {
 		errorResponse := ValidationErrorResponse{
 			Ok:      false,
 			Message: "This fields is uncorrected",
@@ -78,8 +78,4 @@ type ValidationErrorResponse struct {
 type Field struct {
 	Name  string
 	Value string
-}
-
-func (r *ReservationController) CheckAvailableHandler(w http.ResponseWriter, req *http.Request) {
-	r.Templater.Create(w, req, "check-available.page.tmpl", &templateCreator.TemplateData{})
 }
